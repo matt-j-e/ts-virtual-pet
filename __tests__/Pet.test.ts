@@ -70,5 +70,11 @@ describe("walk", () => {
     dave.walk();
     expect(dave.fitness).toBe(10-3-3+4);
   });
+
+  it("cannot increase fitness level beyond 10", () => {
+    dave.growUp();
+    dave.walk();
+    expect(dave.fitness).toBe(10);
+  });
 });
 

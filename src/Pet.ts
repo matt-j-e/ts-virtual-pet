@@ -13,5 +13,6 @@ export class Pet {
 
   walk(): void {
     this.fitness += 4;
+    if (this.fitness > 10) this.fitness = 10;
   }
 }
