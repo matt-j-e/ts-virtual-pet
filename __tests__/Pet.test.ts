@@ -6,6 +6,7 @@ interface pet {
   hunger: number;
   fitness: number;
   growUp(): void;
+  walk(): void;
 }
 
 describe("Constructor", () => {
@@ -36,7 +37,7 @@ describe("grow up", () => {
   let dave: pet;
   beforeEach(() => {
     dave = new Pet("Dave");
-  })
+  });
 
   it("grows old by one unit per call to growUp()", () => {
     dave.growUp();
@@ -54,6 +55,20 @@ describe("grow up", () => {
   it("loses 3 fitness units per call to growUp()", () => {
     dave.growUp();
     expect(dave.fitness).toBe(7);
+  });
+});
+
+describe("walk", () => {
+  let dave: pet;
+  beforeEach(() => {
+    dave = new Pet("Dave");
+  });
+
+  it("gains fitness by 4 units per call to walk()", () => {
+    dave.growUp();
+    dave.growUp();
+    dave.walk();
+    expect(dave.fitness).toBe(10-3-3+4);
   });
 });
 

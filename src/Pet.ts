@@ -11,5 +11,7 @@ export class Pet {
     this.fitness -= 3;
   }
 
-
+  walk(): void {
+    this.fitness += 4;
+  }
 }
