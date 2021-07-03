@@ -8,6 +8,7 @@ interface pet {
   growUp(): void;
   walk(): void;
   feed(): void;
+  checkUp(): string;
 }
 
 describe("Constructor", () => {
@@ -98,3 +99,52 @@ describe("feed", () => {
     expect(dave.hunger).toBe(0);
   });
 });
+
+describe("checkUp", () => {
+  let dave: pet;
+  beforeEach(() => {
+    dave = new Pet("Dave");
+  });
+
+  it("returns 'I need a walk' when fitness level < 4", () => {
+    dave.growUp(); // H5 F7
+    dave.feed();   // H2 F7
+    dave.growUp(); // H7 F4
+    dave.feed();   // H4 F4
+    dave.feed();   // H1 F4
+    dave.growUp(); // H6 F1
+    dave.feed();
+    expect(dave.checkUp()).toBe("I need a walk");
+  });
+
+  it("return 'I am hungry' when hunger level > 4", () => {
+    dave.growUp()
+    expect(dave.checkUp()).toBe("I am hungry");
+  });
+
+  it("returns 'I am hungry AND I need a walk'", () => {
+    dave.growUp(); // H5 F7
+    dave.feed();   // H2 F7
+    dave.growUp(); // H7 F4
+    dave.feed();   // H4 F4
+    dave.feed();   // H1 F4
+    dave.growUp(); // H6 F1
+    expect(dave.checkUp()).toBe("I am hungry AND I need a walk");
+  });
+
+  it("returns appropriate messages", () => {
+    expect(dave.checkUp()).toBe("I feel great!");
+    dave.growUp(); // H5 F7
+    expect(dave.checkUp()).toBe("I am hungry");
+    dave.feed(); // H2 F7
+    expect(dave.checkUp()).toBe("I feel great!");
+    dave.growUp(); // H7 F4
+    expect(dave.checkUp()).toBe("I am hungry");
+    dave.feed(); // H4 F4
+    expect(dave.checkUp()).toBe("I feel great!");
+    dave.growUp(); // H9 F1
+    expect(dave.checkUp()).toBe("I am hungry AND I need a walk");
+    dave.walk(); // H9 F5
+    expect(dave.checkUp()).toBe("I am hungry");
+  });
+})

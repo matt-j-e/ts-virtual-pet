@@ -20,7 +20,7 @@ export class Pet {
   minHunger: number = 0;
   maxFitness: number = 10;
 
-  constructor(public name: string) {}
+  constructor(public name: string = "Eric") {}
 
   growUp(): void {
     this.age += this.growEffect.age;
@@ -36,5 +36,12 @@ export class Pet {
   feed(): void {
     this.hunger += this.feedEffect.hunger;
     if (this.hunger < this.minHunger) this.hunger = this.minHunger;
+  }
+
+  checkUp(): string {
+    if (this.fitness < 4 && this.hunger > 4) return "I am hungry AND I need a walk";
+    if (this.fitness < 4) return "I need a walk";
+    if (this.hunger > 4) return "I am hungry";
+    return "I feel great!";
   }
 }
