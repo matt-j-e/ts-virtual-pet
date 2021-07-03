@@ -7,6 +7,7 @@ interface pet {
   fitness: number;
   growUp(): void;
   walk(): void;
+  feed(): void;
 }
 
 describe("Constructor", () => {
@@ -78,3 +79,22 @@ describe("walk", () => {
   });
 });
 
+describe("feed", () => {
+  let dave: pet;
+  beforeEach(() => {
+    dave = new Pet("Dave");
+  });
+
+  it("reduces hunger by 3 units per call to feed()", () => {
+    dave.growUp();
+    dave.feed();
+    expect(dave.hunger).toBe(2);
+  });
+
+  it("cannot decrease hunger level below 0", () => {
+    dave.growUp();
+    dave.feed();
+    dave.feed();
+    expect(dave.hunger).toBe(0);
+  });
+});
