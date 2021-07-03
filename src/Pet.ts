@@ -20,6 +20,9 @@ export class Pet {
   minHunger: number = 0;
   maxFitness: number = 10;
 
+  feedTrigger: number = 4;
+  walkTrigger: number = 4;
+
   constructor(public name: string = "Eric") {}
 
   growUp(): void {
@@ -39,9 +42,13 @@ export class Pet {
   }
 
   checkUp(): string {
-    if (this.fitness < 4 && this.hunger > 4) return "I am hungry AND I need a walk";
-    if (this.fitness < 4) return "I need a walk";
-    if (this.hunger > 4) return "I am hungry";
+    if (this.fitness < this.walkTrigger && this.hunger > this.feedTrigger) return "I am hungry AND I need a walk";
+    if (this.fitness < this.walkTrigger) return "I need a walk";
+    if (this.hunger > this.feedTrigger) return "I am hungry";
     return "I feel great!";
+  }
+
+  get isAlive(): boolean {
+    return (this.age < 30 && this.hunger < 10 && this.fitness > 0);
   }
 }

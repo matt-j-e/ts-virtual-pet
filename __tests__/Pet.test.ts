@@ -9,6 +9,7 @@ interface pet {
   walk(): void;
   feed(): void;
   checkUp(): string;
+  isAlive: boolean;
 }
 
 describe("Constructor", () => {
@@ -147,4 +148,25 @@ describe("checkUp", () => {
     dave.walk(); // H9 F5
     expect(dave.checkUp()).toBe("I am hungry");
   });
-})
+});
+
+describe("isAlive", () => {
+  let dave: pet;
+  beforeEach(() => {
+    dave = new Pet("Dave");
+  });
+  
+  it("returns true when hunger < 10, false otherwise", () => {
+    expect(dave.isAlive).toBe(true);
+    dave.growUp();
+    dave.growUp();
+    expect(dave.isAlive).toBe(false);
+  });
+
+  it("returns true when fitness > 0, false otherwise", () => {
+    expect(dave.isAlive).toBe(true);
+    dave.fitness = 0;
+    expect(dave.isAlive).toBe(false);
+  });
+  
+});
