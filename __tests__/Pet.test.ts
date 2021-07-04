@@ -45,9 +45,9 @@ describe("grow up", () => {
   it("grows old by one unit per call to growUp()", () => {
     dave.growUp();
     expect(dave.age).toBe(1);
+    dave.hunger = 0; // resetting hunger to allow ageing to happen without dying of hunger
     dave.growUp();
-    dave.growUp();
-    expect(dave.age).toBe(3);
+    expect(dave.age).toBe(2);
   });
 
   it("adds 5 hunger units per call to growUp()", () => {
@@ -59,6 +59,11 @@ describe("grow up", () => {
     dave.growUp();
     expect(dave.fitness).toBe(7);
   });
+
+  it("throws an exception when pet is not alive", () => {
+    dave.hunger = 10;
+    expect(() => dave.growUp()).toThrow("Your pet has snuffed it.");
+  });
 });
 
 describe("walk", () => {
@@ -69,6 +74,7 @@ describe("walk", () => {
 
   it("gains fitness by 4 units per call to walk()", () => {
     dave.growUp();
+    dave.feed(); // need this to prevent death before measuring the fitness
     dave.growUp();
     dave.walk();
     expect(dave.fitness).toBe(10-3-3+4);
@@ -78,6 +84,11 @@ describe("walk", () => {
     dave.growUp();
     dave.walk();
     expect(dave.fitness).toBe(10);
+  });
+
+  it("throws an exception when pet is not alive", () => {
+    dave.fitness = 0;
+    expect(() => dave.walk()).toThrow("Your pet has snuffed it.");
   });
 });
 
@@ -98,6 +109,11 @@ describe("feed", () => {
     dave.feed();
     dave.feed();
     expect(dave.hunger).toBe(0);
+  });
+
+  it("throws an exception when pet is not alive", () => {
+    dave.hunger = 10;
+    expect(() => dave.feed()).toThrow("Your pet has snuffed it.");
   });
 });
 
@@ -147,6 +163,11 @@ describe("checkUp", () => {
     expect(dave.checkUp()).toBe("I am hungry AND I need a walk");
     dave.walk(); // H9 F5
     expect(dave.checkUp()).toBe("I am hungry");
+  });
+
+  it("returns 'Your pet has snuffed it.' when not alive", () => {
+    dave.age = 30;
+    expect(dave.checkUp()).toBe("Your pet has snuffed it.");
   });
 });
 
